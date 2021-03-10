@@ -12,13 +12,10 @@ class Archivo {
         }
     }
     async guardar(contenido) {
-       
         const dataJSON = await this.leer();
-
         let data = JSON.parse(dataJSON)
         contenido.id = data.length + 1
         data.push(contenido);
-
         try {
             await fs.promises.writeFile(this.nombre, JSON.stringify(data));
             return `Producto ${item.title} fué guardado en archivo `;
@@ -27,10 +24,6 @@ class Archivo {
         }
     }
     async crearArchivo(contenido) {
-       
-    
-
-
         try {
             await fs.promises.writeFile(this.nombre, JSON.stringify(contenido));
             return `Producto ${item.title} fué guardado en archivo `;
@@ -48,54 +41,42 @@ class Archivo {
     }
 };
 
-
-
-
-
-
 const archivoProductos = new Archivo("./archivo/productos.txt")
 const archivoCarrito = new Archivo("./archivo/productos.txt")
+async function file(nombre, operacion, contenido) {
+    if (nombre == "productos") {
 
- async function file(nombre,operacion,contenido) {
-    if (nombre=="productos"){
-        console.log("productos")
-        if (operacion=="guardar"){
+        if (operacion == "guardar") {
             await archivoProductos.guardar(contenido)
         }
-        if (operacion=="leer"){
-          console.log("leer")
-            return global.arrayProductos=(JSON.parse(await archivoProductos.leer()))
-            
+        if (operacion == "leer") {
+            return global.arrayProductos = (JSON.parse(await archivoProductos.leer()))
         }
-        if (operacion=="borrar"){
-            console.log("borrar")
+        if (operacion == "borrar") {
             await archivoProductos.borrar()
         }
-        if (operacion=="crear"){
-            console.log("crear")
+        if (operacion == "crear") {
             await archivoProductos.crearArchivo(contenido)
         }
     }
-    if (nombre=="carrito"){
-        console.log("carrito")
-        if (operacion=="guardar"){
+    if (nombre == "carrito") {
+
+        if (operacion == "guardar") {
             await archivoCarrito.guardar(contenido)
         }
-        if (operacion=="leer"){
-          console.log("leer")
-            return global.arrayCarrito=(JSON.parse(await archivoCarrito.leer()))
-            
+        if (operacion == "leer") {
+
+            return global.arrayCarrito = (JSON.parse(await archivoCarrito.leer()))
         }
-        if (operacion=="borrar"){
-            console.log("borrar")
+        if (operacion == "borrar") {
+
             await archivoCarrito.borrar()
         }
-        if (operacion=="crear"){
-            console.log("crear")
+        if (operacion == "crear") {
             await archivoCarrito.crearArchivo(contenido)
         }
     }
 }
 
-module.exports=file
+module.exports = file
 
